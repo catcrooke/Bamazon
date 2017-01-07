@@ -1,0 +1,2 @@
+# Bamazon
+This activity involves creating an Amazon-like storefront with MySQL. The app takes in orders from customers and depletes stock from the store's inventory. As a bonus task, the app can be programmed to track product sales across your store's departments and then to provide a summary of the highest-grossing departments in the store. This involves saving and requiring the MySQL and Prompt npm packages in the files--the app will needs them for data input and storage.
