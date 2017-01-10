@@ -15,19 +15,20 @@ var connection = mysql.createConnection({
 
 connectdb().then(function() {
     // once the connection is finished, run showdb function which displays all of the items for sale
-    showdb();
-}).then(function() {
+    return showdb();
+}).then(function(res) {
     // then run the userchoice function to prompt the user to give the id and quantity of item they want 
-    return userchoice();
+    return userchoice(res);
 });
 
 function showdb() {
     return new Promise(function(success, failure) {
         connection.query("SELECT * FROM products", function(err, res) {
             if (err) {
-                throw err;
+                failure(err);
             } else {
                 console.log(res);
+                success(res);
             }
         });
     });
@@ -45,7 +46,7 @@ function connectdb() {
 }
 
 // function to prompt the user to choose what they want from bamazon
-function userchoice() {
+function userchoice(res) {
     return inquirer.prompt([
         // prompt the user with 2 messages. 1-ask them the id of the item they want, 
         {
@@ -67,3 +68,6 @@ function userchoice() {
 
 
 // if there's not enough in stock, the app needs to log a phrase like 'insufficient quantity!'
+function checkstock() {
+
+}
