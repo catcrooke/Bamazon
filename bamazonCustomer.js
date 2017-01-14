@@ -17,21 +17,19 @@ var connection = mysql.createConnection({
 });
 
 // function to connect to the database, chaining the functions to occur one after the other
-connectdb()
-    .then(function() {
-        // once the connection is finished, run showdb function which displays all of the items for sale
-        return showdb();
-    })
-    .then(function(res) {
-        // then run the userchoice function to prompt the user to give the id and quantity of item they want 
-        return userchoice(res);
-        // inquirer response values
-    }).then(function(res) {
-        // then run the checkstock function to check if the amount of the item the user wants is available
-        return checkstock(res);
-    }).then(function(res) {
-        connection.end();
-    });
+connectdb().then(function() {
+    // once the connection is finished, run showdb function which displays all of the items for sale
+    return showdb();
+}).then(function(res) {
+    // then run the userchoice function to prompt the user to give the id and quantity of item they want 
+    return userchoice(res);
+    // inquirer response values
+}).then(function(res) {
+    // then run the checkstock function to check if the amount of the item the user wants is available
+    return checkstock(res);
+}).then(function(res) {
+    connection.end();
+});
 
 // function to show the database in node
 function showdb() {
@@ -52,6 +50,7 @@ function showdb() {
 function connectdb() {
     return new Promise(function(success, failure) {
         connection.connect(function(err) {
+            // if error reject a promise
             if (err) failure(err);
             console.log("connected as id " + connection.threadId);
             success();
@@ -78,7 +77,7 @@ function userchoice(res) {
     ]);
 }
 
-// function to query the database that can be used multiple times 
+// general function to query the database that can be used multiple times 
 function queryDB(querystring, queryobject) {
     // promise function allows for control over asynchronous responses
     return new Promise(function(success, failure) {
